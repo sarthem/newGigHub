@@ -21,7 +21,7 @@ namespace newGigHub.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("newGigHubDBContext", throwIfV1Schema: false)
         {
         }
 
