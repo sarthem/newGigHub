@@ -185,6 +185,10 @@
     <Compile Include="Migrations\201910161945312_OverrideConventiosForGissAndGenres.Designer.cs">
       <DependentUpon>201910161945312_OverrideConventiosForGissAndGenres.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910161953165_PopulateGenresTable.cs" />
+    <Compile Include="Migrations\201910161953165_PopulateGenresTable.Designer.cs">
+      <DependentUpon>201910161953165_PopulateGenresTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -277,6 +281,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910161945312_OverrideConventiosForGissAndGenres.resx">
       <DependentUpon>201910161945312_OverrideConventiosForGissAndGenres.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910161953165_PopulateGenresTable.resx">
+      <DependentUpon>201910161953165_PopulateGenresTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
