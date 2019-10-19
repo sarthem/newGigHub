@@ -23,8 +23,11 @@ textarea {
     max-width: 280px;
 }
 
-
-
+/*Allertmessage*/
+span.field-validation-error {
+    color: red;
+    font-weight: bold;
+}
 /*bootstrap ovveride*/
 
 .navbar-inverse {
