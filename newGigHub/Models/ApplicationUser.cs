@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -14,6 +16,16 @@ namespace newGigHub.Models
         [Required]
         [StringLength(100)]
         public string Name { get; set; }
+        //add this prop so each user has a list of followers and followee as prop
+        public ICollection<Following> Followers { get; set; }
+        public ICollection<Following> Followees { get; set; }
+        
+        //initialize the 2 lists inside a constructor
+        public ApplicationUser()
+        {
+            Followers = new Collection<Following>();
+            Followees = new Collection<Following>();
+        }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

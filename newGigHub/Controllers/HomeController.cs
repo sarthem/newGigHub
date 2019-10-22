@@ -1,4 +1,5 @@
 ﻿using newGigHub.Models;
+using newGigHub.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,21 +11,28 @@ namespace newGigHub.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ApplicationDbContext _conetxt;
+        private readonly ApplicationDbContext _context;
 
         public HomeController()
         {
-            _conetxt = new ApplicationDbContext();
+            _context = new ApplicationDbContext();
         } 
         
         public ActionResult Index()
         {
-            var upcomingGigs = _conetxt.Gigs
+            var upcomingGigs = _context.Gigs
                 .Include(g => g.Artist)
                 .Include(g => g.Genre)
                 .Where(g => g.DateTime > DateTime.Now);
 
-            return View(upcomingGigs);
+            var viewModel = new GigsViewModel()
+            {
+                UpcomingGigs = upcomingGigs,
+                ShowActions = User.Identity.IsAuthenticated,
+                Heading = "Upcoming Gigs"                
+            };
+
+            return View("Gigs", viewModel);
         }
 
         public ActionResult About()
