@@ -18,7 +18,38 @@ namespace newGigHub.Controllers
         {
             _context = new ApplicationDbContext();
         }
-               
+        [Authorize]
+        public ActionResult Mine()
+        {
+            var userId = User.Identity.GetUserId();
+            var gigs = _context.Gigs
+                .Where(g => g.ArtistId == userId && g.DateTime > DateTime.Now)
+                .Include(g => g.Genre)
+                .ToList();
+
+            return View(gigs);
+        }
+
+        [Authorize]
+        public ActionResult Attending()
+        {
+            var userId = User.Identity.GetUserId();
+
+            var gigs = _context.Attendances
+                            .Where(a => a.AttendeeId == userId)
+                            .Select(a => a.Gig)
+                            .Include(a => a.Artist)
+                            .Include(a => a.Genre)
+                            .ToList();
+            var viewModel = new GigsViewModel()
+            {
+                UpcomingGigs = gigs,
+                ShowActions = User.Identity.IsAuthenticated,
+                Heading = "Gigs I'm Attending"
+            };
+
+            return View("Gigs", viewModel);
+        }
         [Authorize]
         public ActionResult Create()
         {
@@ -54,29 +85,8 @@ namespace newGigHub.Controllers
             _context.Gigs.Add(gig);
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Mine", "Gigs");
 
-        }
-
-        [Authorize]        
-        public ActionResult Attending()
-        {
-            var userId = User.Identity.GetUserId();
-
-            var gigs = _context.Attendances
-                            .Where(a => a.AttendeeId == userId)
-                            .Select(a => a.Gig)
-                            .Include(a => a.Artist)
-                            .Include(a => a.Genre)
-                            .ToList();
-            var viewModel = new GigsViewModel()
-            {
-                UpcomingGigs = gigs,
-                ShowActions = User.Identity.IsAuthenticated,
-                Heading = "Gigs I'm Attending"
-            };
-
-            return View("Gigs", viewModel);
-        }
+        }        
     }
 }
